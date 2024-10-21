@@ -2,6 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
 
+// Variables de entorno para URL del SAT y contraseña del CSD
+const SAT_API_URL = process.env.SAT_API_URL || 'https://pruebasapi.sat.gob.mx/facturacion';
+const SAT_AUTH_URL = process.env.SAT_AUTH_URL || 'https://pruebasapi.sat.gob.mx/autenticacion';
+const password = process.env.CSD_PASSWORD;
+
 // Rutas a los archivos del Certificado de Sello Digital (CSD)
 const keyPath = path.join(__dirname, '/mnt/data/CSD_Sucursal_1_URE180429TM6_20230518_063131.key');
 const certPath = path.join(__dirname, '/mnt/data/CSD_Sucursal_1_URE180429TM6_20230518_063131.cer');
@@ -9,9 +14,6 @@ const certPath = path.join(__dirname, '/mnt/data/CSD_Sucursal_1_URE180429TM6_202
 // Lee los archivos de la clave privada y el certificado
 const privateKey = fs.readFileSync(keyPath, 'utf8');
 const certificate = fs.readFileSync(certPath, 'utf8');
-
-// Contraseña para la clave privada (ajusta esta variable si tu clave privada tiene contraseña)
-const password = process.env.CSD_PASSWORD;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -25,7 +27,7 @@ export default async function handler(req, res) {
     const token = await autenticarConSAT();
 
     // Hacer la solicitud de factura al SAT (ambiente de pruebas)
-    const facturaResponse = await fetch('https://pruebasapi.sat.gob.mx/facturacion', {
+    const facturaResponse = await fetch(SAT_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -43,23 +45,23 @@ export default async function handler(req, res) {
 
     if (facturaResponse.ok) {
       res.status(200).json({
-        message: 'Factura de prueba generada exitosamente',
+        message: 'Factura generada exitosamente',
         facturaId: facturaResult.facturaId,
         xmlUrl: facturaResult.xmlUrl,  // URL para descargar el XML
         pdfUrl: facturaResult.pdfUrl   // URL para descargar el PDF (representación impresa)
       });
     } else {
-      res.status(400).json({ message: 'Error al generar la factura de prueba', error: facturaResult.message });
+      res.status(400).json({ message: 'Error al generar la factura', error: facturaResult.message });
     }
   } catch (error) {
-    console.error('Error al generar la factura de prueba:', error);
+    console.error('Error al generar la factura:', error);
     res.status(500).json({ message: 'Error interno del servidor', error: error.message });
   }
 }
 
 // Función para autenticar con el SAT (entorno de pruebas) y obtener el token
 async function autenticarConSAT() {
-  const response = await fetch('https://pruebasapi.sat.gob.mx/autenticacion', {
+  const response = await fetch(SAT_AUTH_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/xml',
@@ -74,7 +76,7 @@ async function autenticarConSAT() {
               </o:Security>
           </s:Header>
           <s:Body>
-              <!-- Información de autenticación de prueba firmada -->
+              <!-- Información de autenticación -->
           </s:Body>
       </s:Envelope>
     `
@@ -85,7 +87,7 @@ async function autenticarConSAT() {
     const token = parseToken(data);  // Función para extraer el token del XML
     return token;
   } else {
-    throw new Error('Error en la autenticación con el SAT (pruebas)');
+    throw new Error('Error en la autenticación con el SAT');
   }
 }
 
