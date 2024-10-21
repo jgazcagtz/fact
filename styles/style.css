@@ -1,0 +1,116 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    border: 2px solid #ff0000;
+    overflow-y: auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #ff0000;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ff0000;
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    background-color: #fefefe;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #ff0000;
+}
+
+button {
+    padding: 14px;
+    width: 100%;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #d40000;
+}
+
+#resultado {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center;
+}
+
+#descargas a {
+    display: inline-block;
+    margin: 15px 10px 0 0;
+    padding: 12px;
+    background-color: #ff0000;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+#descargas a:hover {
+    background-color: #d40000;
+}
