@@ -3,14 +3,14 @@ const path = require('path');
 const fetch = require('node-fetch');
 
 // Rutas a los archivos del Certificado de Sello Digital (CSD)
-const keyPath = path.join(__dirname, '../certs/csd_private_key.key');
-const certPath = path.join(__dirname, '../certs/csd_certificate.cer');
+const keyPath = path.join(__dirname, '/mnt/data/CSD_Sucursal_1_URE180429TM6_20230518_063131.key');
+const certPath = path.join(__dirname, '/mnt/data/CSD_Sucursal_1_URE180429TM6_20230518_063131.cer');
 
 // Lee los archivos de la clave privada y el certificado
 const privateKey = fs.readFileSync(keyPath, 'utf8');
 const certificate = fs.readFileSync(certPath, 'utf8');
 
-// Contraseña para la clave privada
+// Contraseña para la clave privada (ajusta esta variable si tu clave privada tiene contraseña)
 const password = process.env.CSD_PASSWORD;
 
 export default async function handler(req, res) {
@@ -74,8 +74,7 @@ async function autenticarConSAT() {
               </o:Security>
           </s:Header>
           <s:Body>
-              <!-- Información de autenticación de prueba -->
-              <!-- Firmado usando la clave privada -->
+              <!-- Información de autenticación de prueba firmada -->
           </s:Body>
       </s:Envelope>
     `
