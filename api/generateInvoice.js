@@ -8,8 +8,8 @@ const SAT_AUTH_URL = process.env.SAT_AUTH_URL || 'https://pruebasapi.sat.gob.mx/
 const password = process.env.CSD_PASSWORD;
 
 // Rutas a los archivos del Certificado de Sello Digital (CSD)
-const keyPath = path.join(__dirname, '/mnt/data/CSD_Sucursal_1_URE180429TM6_20230518_063131.key');
-const certPath = path.join(__dirname, '/mnt/data/CSD_Sucursal_1_URE180429TM6_20230518_063131.cer');
+const keyPath = path.join(__dirname, '/certs/CSD_Sucursal_1_URE180429TM6_20230518_063131.key');
+const certPath = path.join(__dirname, '/certs/data/CSD_Sucursal_1_URE180429TM6_20230518_063131.cer');
 
 // Lee los archivos de la clave privada y el certificado
 const privateKey = fs.readFileSync(keyPath, 'utf8');
